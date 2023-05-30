@@ -14,7 +14,7 @@ const applianceRadio = document.querySelector(".usage:checked");
 const useBtn = document.querySelector(".useNow");
 /* ***** LOCAL STORAGE ***** */
 let previousUnits = JSON.parse(localStorage.getItem("unitsAvail")) || 0;
-let previousUnitsTotal = localStorage.getItem("unitsBought") || 0;
+let previousUnitsTotal = JSON.parse(localStorage.getItem("unitsBought")) || 0;
 let previousSpentAmount = JSON.parse(localStorage.getItem("spentAmount")) || 0;
 unitsAvailEl.innerHTML = previousUnits;
 unitsBoughtEl.innerHTML = previousUnitsTotal;
