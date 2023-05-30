@@ -2,6 +2,7 @@ function Electricity(previousUnits, previousUnitsTotal, previousSpentAmount) {
   let unitsAvailable = previousUnits || 0;
   let totalCost = previousSpentAmount || 0;
   let unitsTotal = previousUnitsTotal || 0;
+  let advanceBalance = 0;
   let takeAdvance = true;
   // do we want to go with this or array?
   let appliances = {
@@ -12,24 +13,41 @@ function Electricity(previousUnits, previousUnitsTotal, previousSpentAmount) {
   };
 
   function topUpElectricity(amount) {
-    if (amount === 10) {
-      unitsAvailable += 7;
-      unitsTotal += 7;
-      totalCost += amount;
-    }
-    if (amount === 20) {
-      unitsAvailable += 14;
-      unitsTotal += 14;
-      totalCost += amount;
-    }
-    if (amount === 50) {
-      unitsAvailable += 35;
-      unitsTotal += 35;
-      totalCost += amount;
-    }
     if (takeAdvance && amount === "advance") {
+      advanceBalance = 30;
       unitsAvailable += 21;
       takeAdvance = false;
+    }
+    if (amount === 10) {
+      advanceBalance = advanceBalance - amount;
+      if (advanceBalance < 0) {
+        unitsAvailable += 7;
+        unitsTotal += 7;
+        totalCost += amount;
+        advanceBalance = 0;
+        takeAdvance = true;
+      }
+    }
+    if (amount === 20) {
+      advanceBalance = advanceBalance - amount;
+      if (advanceBalance < 0) {
+        unitsAvailable += 14;
+        unitsTotal += 14;
+        totalCost += amount;
+        advanceBalance = 0;
+        takeAdvance = true;
+      }
+    }
+    if (amount === 50) {
+      advanceBalance = advanceBalance - amount;
+      if (advanceBalance < 0) {
+        unitsAvailable += 35;
+        unitsTotal += 35;
+        totalCost += amount;
+        advanceBalance = 0;
+        takeAdvance = true;
+      }
+      console.log(unitsAvailable);
     }
   }
 

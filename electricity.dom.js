@@ -1,17 +1,17 @@
 // DOM element(s) references
 /*  ***** TOP UP ELECTRICITY ***** */
-// const topupRadio = document.querySelector(".topup:checked");
 const buyBtn = document.querySelector(".topupNow");
 
-/*  ***** TOP UP ELECTRICITY ***** */
+/*  ***** ELECTRICITY ***** */
 const unitsAvailEl = document.querySelector(".unitsAvailable");
 const unitsBoughtEl = document.querySelector(".totalUnits");
 const spentAmountEl = document.querySelector(".totalAmount");
 const advanceCheck = document.querySelector(".advanceTaken");
+const checkMark = document.querySelector(".advanceTaken");
 
-/*  ***** TOP UP ELECTRICITY ***** */
-const applianceRadio = document.querySelector(".usage:checked");
+/*  ***** USE ELECTRICITY ***** */
 const useBtn = document.querySelector(".useNow");
+
 /* ***** LOCAL STORAGE ***** */
 let previousUnits = JSON.parse(localStorage.getItem("unitsAvail")) || 0;
 let previousUnitsTotal = JSON.parse(localStorage.getItem("unitsBought")) || 0;
@@ -28,8 +28,17 @@ const electricity = Electricity(
 );
 
 // DOM events here
+
+// green tick functionality
+let checked;
+
 function buyFunction() {
   const topupRadio = document.querySelector(".topup:checked");
+  if (topupRadio) {
+    if (topupRadio.value === "advance") {
+      checked = "checked";
+    }
+  }
   if (topupRadio) {
     electricity.topUpElectricity(topupRadio.value);
     electricity.topUpElectricity(Number(topupRadio.value));
@@ -40,5 +49,22 @@ function buyFunction() {
     unitsBoughtEl.innerHTML = localStorage.getItem("unitsBought");
     spentAmountEl.innerHTML = localStorage.getItem("spentAmount");
   }
+  // console.log(checked);
+}
+console.log(checked);
+checked === "checked"
+  ? checkMark.classList.remove("hidden")
+  : checkMark.classList.add("hidden");
+
+function useBtnFunction() {
+  const applianceRadio = document.querySelector(".usage:checked");
+  if (applianceRadio) {
+    electricity.useAppliance(applianceRadio.value);
+    // UNITS AVAILABLE
+    localStorage.setItem("unitsAvail", electricity.getUnitsAvailable());
+    unitsAvailEl.innerHTML = localStorage.getItem("unitsAvail");
+  }
+  console.log(electricity.getUnitsAvailable());
 }
 buyBtn.addEventListener("click", buyFunction);
+useBtn.addEventListener("click", useBtnFunction);
