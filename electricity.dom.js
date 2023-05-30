@@ -30,13 +30,16 @@ const electricity = Electricity(
 // DOM events here
 
 // green tick functionality
-let checked;
-
+let checked = localStorage.getItem("greenCheck") || "unchecked";
+checked === "checked"
+  ? checkMark.classList.remove("hidden")
+  : checkMark.classList.add("hidden");
 function buyFunction() {
   const topupRadio = document.querySelector(".topup:checked");
   if (topupRadio) {
     if (topupRadio.value === "advance") {
-      checked = "checked";
+      localStorage.setItem("greenCheck", "checked");
+      checkMark.classList.remove("hidden");
     }
   }
   if (topupRadio) {
@@ -49,12 +52,7 @@ function buyFunction() {
     unitsBoughtEl.innerHTML = localStorage.getItem("unitsBought");
     spentAmountEl.innerHTML = localStorage.getItem("spentAmount");
   }
-  // console.log(checked);
 }
-console.log(checked);
-checked === "checked"
-  ? checkMark.classList.remove("hidden")
-  : checkMark.classList.add("hidden");
 
 function useBtnFunction() {
   const applianceRadio = document.querySelector(".usage:checked");
