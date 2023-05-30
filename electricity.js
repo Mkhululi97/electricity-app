@@ -16,6 +16,7 @@ function Electricity(previousUnits, previousUnitsTotal, previousSpentAmount) {
     if (takeAdvance && amount === "advance") {
       advanceBalance = 30;
       unitsAvailable += 21;
+      totalCost += 30;
       takeAdvance = false;
     }
     if (amount === 10) {
